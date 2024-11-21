@@ -1,4 +1,4 @@
-package com.project.assetapi;
+package com.project.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
