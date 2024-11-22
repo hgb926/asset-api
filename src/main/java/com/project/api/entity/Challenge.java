@@ -1,5 +1,6 @@
 package com.project.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,6 +29,8 @@ public class Challenge {
     private User organizer;
 
     // 중간 테이블(ChallengeParticipant)을 통해 참가자와 연결
+    @Builder.Default
+    @JsonManagedReference("challenge-challenge-participant")
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChallengeParticipant> participants = new ArrayList<>();
 

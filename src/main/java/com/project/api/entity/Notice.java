@@ -1,6 +1,7 @@
 package com.project.api.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,6 +30,7 @@ public class Notice {
 
     private boolean isClicked;
 
+    @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime createdAt;
 }

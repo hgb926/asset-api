@@ -2,8 +2,10 @@ package com.project.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class AccountBook {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -35,6 +37,9 @@ public class AccountBook {
     @JsonManagedReference("import-expense")
     @OneToMany(mappedBy = "accountBook", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Import> importList = new ArrayList<>();
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
 
 }

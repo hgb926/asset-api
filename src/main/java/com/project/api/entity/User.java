@@ -1,6 +1,8 @@
 package com.project.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -33,8 +35,26 @@ public class User {
 
     private boolean emailVerified;
 
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @Builder.Default
+    @JsonManagedReference("user-challenge-participant")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChallengeParticipant> challenges = new ArrayList<>();
+
+    @Builder.Default
+    @JsonManagedReference("user-notice")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Notice> noticeList = new ArrayList<>();
+
+    @Builder.Default
+    @JsonManagedReference("user-account_book")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AccountBook> accountBooks = new ArrayList<>();
+
+    @Builder.Default
+    @JsonManagedReference("user-goal")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Goal> goals = new ArrayList<>();
 }

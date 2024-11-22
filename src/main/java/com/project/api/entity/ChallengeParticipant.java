@@ -1,6 +1,7 @@
 package com.project.api.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -30,5 +31,6 @@ public class ChallengeParticipant {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @CreationTimestamp
     private LocalDateTime joinedAt; // 참가 시점
 }

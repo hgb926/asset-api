@@ -2,6 +2,7 @@ package com.project.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -24,10 +25,15 @@ public class Expense {
 
     private String category;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     private String description;
 
     private double amount;
 
+    @CreationTimestamp
     private LocalDateTime expenseAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
