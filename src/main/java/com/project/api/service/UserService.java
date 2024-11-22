@@ -2,9 +2,11 @@ package com.project.api.service;
 
 import com.project.api.auth.TokenProvider;
 import com.project.api.dto.request.LoginRequestDto;
+import com.project.api.dto.request.UserSaveDto;
 import com.project.api.dto.response.LoginResponseDto;
 import com.project.api.entity.EmailVerification;
 import com.project.api.entity.User;
+import com.project.api.exception.LoginFailException;
 import com.project.api.repository.EmailVerificationRepository;
 import com.project.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -199,12 +201,67 @@ public class UserService {
 
     // 회원 인증 처리 (login)
     public LoginResponseDto authenticate(final LoginRequestDto dto) {
-        userRepository.findByEmail(dto.getEmail())
+        User user = userRepository.findByEmail(dto.getEmail())
                 .orElseThrow(
-                        () -> new RuntimeException("가입된 회원이 아닙니다")
+                        () -> new LoginFailException("가입된 회원이 아닙니다.")
                 );
-        return null;
+
+        if (!user.isEmailVerified() || user.getPassword() == null) {
+            throw new LoginFailException("회원가입이 중단된 회원입니다.");
+        }
+
+        // 패스워드 검증
+        String inputPassword = dto.getPassword();
+        String encodedPassword = user.getPassword();
+
+        if (!encoder.matches(inputPassword, encodedPassword)) {
+            throw new LoginFailException("비밀번호가 틀렸습니다.");
+        }
+
+        // 로그인 성공, 토큰 생성 섹션.
+        // 인증정보(이메일, 닉네임, 프사, 토큰정보)를 클라이언트(프론트)에게 전송
+        String token = tokenProvider.createToken(user);
+
+        if (dto.isAutoLogin()) {
+            user.setAutoLogin(true);
+            userRepository.save(user);
+        } else {
+            user.setAutoLogin(false);
+            userRepository.save(user);
+        }
+        return LoginResponseDto.builder()
+                .email(dto.getEmail())
+                .role(user.getRole().toString())
+                .token(token)
+                .autoLogin(user.isAutoLogin())
+                .userId(user.getId())
+                .build();
+
     }
+
+    // 회원가입 마무리 단계
+    public void confirmSignUp(UserSaveDto dto) {
+
+        log.debug("UserSaveDto - {}", dto);
+
+        // 기존 회원 정보 조회
+        User user = userRepository
+                .findByEmail(dto.getEmail())
+                .orElseThrow(
+                        () -> new RuntimeException("회원 정보가 존재하지 않습니다.")
+                );
+        log.info("user - {}", user);
+
+        // db저장
+        String password = dto.getPassword();
+        String encodedPassword = encoder.encode(password);
+
+        user.confirm(encodedPassword, dto.getNickname());
+
+        log.debug("saved user : {}", user);
+        userRepository.save(user);
+    }
+
 }
 
 

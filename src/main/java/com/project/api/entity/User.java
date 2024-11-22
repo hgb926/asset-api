@@ -59,4 +59,9 @@ public class User {
     @JsonManagedReference("user-goal")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Goal> goals = new ArrayList<>();
+
+    public void confirm(String password, String nickname) {
+        this.password = password;
+        this.nickname = nickname;
+    }
 }
