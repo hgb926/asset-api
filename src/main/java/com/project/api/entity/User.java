@@ -60,6 +60,13 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Goal> goals = new ArrayList<>();
 
+    @PrePersist
+    public void prePersist() {
+        if (this.role == null) {
+            this.role = Role.USER;
+        }
+    }
+
     public void confirm(String password, String nickname) {
         this.password = password;
         this.nickname = nickname;
