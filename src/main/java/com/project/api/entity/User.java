@@ -31,6 +31,8 @@ public class User {
 
     private String nickname;
 
+    private boolean autoLogin;
+
     private Role role;
 
     private boolean emailVerified;
