@@ -1,5 +1,6 @@
 package com.project.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,7 +30,8 @@ public class Expense {
 
     private LocalDateTime expenseAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference("accountBook-expense")
     @JoinColumn(name = "account_book_id", nullable = false)
     private AccountBook accountBook;
 }
