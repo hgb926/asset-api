@@ -1,6 +1,8 @@
 package com.project.api.service;
 
 import com.project.api.auth.TokenProvider;
+import com.project.api.dto.request.LoginRequestDto;
+import com.project.api.dto.response.LoginResponseDto;
 import com.project.api.entity.EmailVerification;
 import com.project.api.entity.User;
 import com.project.api.repository.EmailVerificationRepository;
@@ -196,5 +198,19 @@ public class UserService {
     }
 
     // 회원 인증 처리 (login)
-
+    public LoginResponseDto authenticate(final LoginRequestDto dto) {
+        userRepository.findByEmail(dto.getEmail())
+                .orElseThrow(
+                        () -> new RuntimeException("가입된 회원이 아닙니다")
+                );
+        return null;
+    }
 }
+
+
+
+
+
+
+
+
