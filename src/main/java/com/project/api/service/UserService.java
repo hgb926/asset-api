@@ -230,10 +230,8 @@ public class UserService {
             userRepository.save(user);
         }
         return LoginResponseDto.builder()
-                .email(dto.getEmail())
                 .role(user.getRole().toString())
                 .token(token)
-                .autoLogin(user.isAutoLogin())
                 .userId(user.getId())
                 .build();
 

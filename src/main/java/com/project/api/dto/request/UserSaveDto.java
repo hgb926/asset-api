@@ -15,6 +15,4 @@ public class UserSaveDto {
     private String password;
 
     private String nickname;
-
-    private boolean autoLogin;
 }

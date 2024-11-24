@@ -71,4 +71,5 @@ public class User {
         this.password = password;
         this.nickname = nickname;
     }
+    // 이제 유저 조회 메서드 등등
 }
