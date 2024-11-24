@@ -50,10 +50,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Notice> noticeList = new ArrayList<>();
 
-    @Builder.Default
-    @JsonManagedReference("user-account_book")
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AccountBook> accountBooks = new ArrayList<>();
+    // User 엔터티
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private AccountBook accountBooks;
 
     @Builder.Default
     @JsonManagedReference("user-goal")

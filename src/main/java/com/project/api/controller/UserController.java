@@ -82,4 +82,10 @@ public class UserController {
             return ResponseEntity.status(422).body(errorMessage);
         }
     }
+
+
+    @GetMapping("/user")
+    public ResponseEntity<?> getUser(Long userId) {
+        userService.findUser(userId);
+    }
 }

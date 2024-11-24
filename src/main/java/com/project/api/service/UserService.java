@@ -260,6 +260,11 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void findUser(Long userId) {
+        User foundUser = userRepository.findById(userId).orElseThrow();
+        // dto 변환
+
+    }
 }
 
 
