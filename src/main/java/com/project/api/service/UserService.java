@@ -2,6 +2,7 @@ package com.project.api.service;
 
 import com.project.api.auth.TokenProvider;
 import com.project.api.dto.request.LoginRequestDto;
+import com.project.api.dto.request.UserRequestDto;
 import com.project.api.dto.request.UserSaveDto;
 import com.project.api.dto.response.LoginResponseDto;
 import com.project.api.entity.EmailVerification;
@@ -260,10 +261,22 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void findUser(Long userId) {
+    public UserRequestDto findUser(Long userId) {
         User foundUser = userRepository.findById(userId).orElseThrow();
         // dto 변환
-
+        UserRequestDto dto = UserRequestDto.builder()
+                .id(userId)
+                .email(foundUser.getEmail())
+                .nickname(foundUser.getNickname())
+                .autoLogin(foundUser.isAutoLogin())
+                .role(foundUser.getRole().toString())
+                .createdAt(foundUser.getCreatedAt())
+                .challenges(foundUser.getChallenges())
+                .noticeList(foundUser.getNoticeList())
+                .accountBook(foundUser.getAccountBooks())
+                .goalList(foundUser.getGoals())
+                .build();
+        return dto;
     }
 }
 

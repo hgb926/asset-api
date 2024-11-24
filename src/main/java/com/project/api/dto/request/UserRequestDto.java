@@ -1,8 +1,6 @@
 package com.project.api.dto.request;
 
-import com.project.api.entity.ChallengeParticipant;
-import com.project.api.entity.Notice;
-import com.project.api.entity.Role;
+import com.project.api.entity.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -21,9 +19,12 @@ public class UserRequestDto {
     private String email;
     private String nickname;
     private boolean autoLogin;
-    private Role role;
+    private String role;
     private LocalDateTime createdAt;
     private List<ChallengeParticipant> challenges;
     private List<Notice> noticeList;
+    private AccountBook accountBook;
+    private List<Goal> goalList;
+
 
 }
