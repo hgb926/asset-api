@@ -1,6 +1,7 @@
 package com.project.api.controller;
 
 import com.project.api.dto.request.LoginRequestDto;
+import com.project.api.dto.request.UserRequestDto;
 import com.project.api.dto.request.UserSaveDto;
 import com.project.api.dto.response.LoginResponseDto;
 import com.project.api.exception.LoginFailException;
@@ -82,4 +83,14 @@ public class UserController {
             return ResponseEntity.status(422).body(errorMessage);
         }
     }
+
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getUser(@PathVariable Long userId) {
+        UserRequestDto foundUser = userService.findUser(userId);
+        log.info("found user in controller- {}", foundUser);
+        return ResponseEntity.ok().body(foundUser);
+    }
+
+
 }

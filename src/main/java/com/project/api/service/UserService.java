@@ -2,6 +2,7 @@ package com.project.api.service;
 
 import com.project.api.auth.TokenProvider;
 import com.project.api.dto.request.LoginRequestDto;
+import com.project.api.dto.request.UserRequestDto;
 import com.project.api.dto.request.UserSaveDto;
 import com.project.api.dto.response.LoginResponseDto;
 import com.project.api.entity.EmailVerification;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 @Slf4j
@@ -230,10 +232,8 @@ public class UserService {
             userRepository.save(user);
         }
         return LoginResponseDto.builder()
-                .email(dto.getEmail())
                 .role(user.getRole().toString())
                 .token(token)
-                .autoLogin(user.isAutoLogin())
                 .userId(user.getId())
                 .build();
 
@@ -260,6 +260,29 @@ public class UserService {
 
         log.debug("saved user : {}", user);
         userRepository.save(user);
+    }
+
+    public UserRequestDto findUser(Long userId) {
+        User foundUser = userRepository.findById(userId).orElseThrow();
+
+        // 날짜 형식 지정
+        String formattedCreatedAt = foundUser.getCreatedAt()
+                .format(DateTimeFormatter.ofPattern("yyyy년 M월 d일 a h시 m분"));
+
+        // dto 변환
+        UserRequestDto dto = UserRequestDto.builder()
+                .id(userId)
+                .email(foundUser.getEmail())
+                .nickname(foundUser.getNickname())
+                .autoLogin(foundUser.isAutoLogin())
+                .role(foundUser.getRole().toString())
+                .challenges(foundUser.getChallenges())
+                .noticeList(foundUser.getNoticeList())
+                .accountBook(foundUser.getAccountBooks())
+                .goalList(foundUser.getGoals())
+                .createdAt(formattedCreatedAt) // 포맷된 문자열 사용
+                .build();
+        return dto;
     }
 
 }
