@@ -20,7 +20,7 @@ public class UserRequestDto {
     private String nickname;
     private boolean autoLogin;
     private String role;
-    private LocalDateTime createdAt;
+    private String createdAt;
     private List<ChallengeParticipant> challenges;
     private List<Notice> noticeList;
     private AccountBook accountBook;

@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 @Slf4j
@@ -270,11 +271,11 @@ public class UserService {
                 .nickname(foundUser.getNickname())
                 .autoLogin(foundUser.isAutoLogin())
                 .role(foundUser.getRole().toString())
-                .createdAt(foundUser.getCreatedAt())
                 .challenges(foundUser.getChallenges())
                 .noticeList(foundUser.getNoticeList())
                 .accountBook(foundUser.getAccountBooks())
                 .goalList(foundUser.getGoals())
+                .createdAt(String.valueOf(DateTimeFormatter.ofPattern("yyyy년 m월 d일 a h시 m분")))
                 .build();
         return dto;
     }
