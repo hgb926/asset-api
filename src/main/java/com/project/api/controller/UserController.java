@@ -87,9 +87,10 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUser(@PathVariable Long userId) {
-        log.info("User id - {}", userId);
         UserRequestDto foundUser = userService.findUser(userId);
         log.info("found user in controller- {}", foundUser);
         return ResponseEntity.ok().body(foundUser);
     }
+
+
 }

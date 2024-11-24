@@ -264,6 +264,11 @@ public class UserService {
 
     public UserRequestDto findUser(Long userId) {
         User foundUser = userRepository.findById(userId).orElseThrow();
+
+        // 날짜 형식 지정
+        String formattedCreatedAt = foundUser.getCreatedAt()
+                .format(DateTimeFormatter.ofPattern("yyyy년 M월 d일 a h시 m분"));
+
         // dto 변환
         UserRequestDto dto = UserRequestDto.builder()
                 .id(userId)
@@ -275,10 +280,11 @@ public class UserService {
                 .noticeList(foundUser.getNoticeList())
                 .accountBook(foundUser.getAccountBooks())
                 .goalList(foundUser.getGoals())
-                .createdAt(String.valueOf(DateTimeFormatter.ofPattern("yyyy년 m월 d일 a h시 m분")))
+                .createdAt(formattedCreatedAt) // 포맷된 문자열 사용
                 .build();
         return dto;
     }
+
 }
 
 
