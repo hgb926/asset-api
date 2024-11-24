@@ -1,5 +1,6 @@
 package com.project.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,6 +26,7 @@ public class AccountBook {
     private Long id;
 
     @OneToOne
+    @JsonBackReference
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
