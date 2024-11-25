@@ -51,6 +51,7 @@ public class User {
     private List<Notice> noticeList = new ArrayList<>();
 
     // User 엔터티
+    @JsonManagedReference
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private AccountBook accountBooks;
 

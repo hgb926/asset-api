@@ -5,6 +5,7 @@ import com.project.api.dto.request.LoginRequestDto;
 import com.project.api.dto.request.UserRequestDto;
 import com.project.api.dto.request.UserSaveDto;
 import com.project.api.dto.response.LoginResponseDto;
+import com.project.api.entity.AccountBook;
 import com.project.api.entity.EmailVerification;
 import com.project.api.entity.User;
 import com.project.api.exception.LoginFailException;
@@ -189,6 +190,7 @@ public class UserService {
                     && code.equals(ev.getVerificationCode())
             ) {
                 user.setEmailVerified(true); // 변경
+                log.info("user in isMatchCode - {}", user);
                 userRepository.save(user); // update
                 emailVerificationRepository.delete(ev);
                 return true;
@@ -207,7 +209,7 @@ public class UserService {
                 .orElseThrow(
                         () -> new LoginFailException("가입된 회원이 아닙니다.")
                 );
-
+        log.info("foundUser - {}", user);
         if (!user.isEmailVerified() || user.getPassword() == null) {
             throw new LoginFailException("회원가입이 중단된 회원입니다.");
         }
@@ -250,7 +252,11 @@ public class UserService {
                 .orElseThrow(
                         () -> new RuntimeException("회원 정보가 존재하지 않습니다.")
                 );
+        user.setAccountBooks(AccountBook.builder()
+                .user(user)
+                .build());
         log.info("user - {}", user);
+
 
         // db저장
         String password = dto.getPassword();
