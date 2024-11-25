@@ -31,6 +31,8 @@ public class User {
 
     private String nickname;
 
+    private Long currentMoney;
+
     private boolean autoLogin;
 
     private Role role;
