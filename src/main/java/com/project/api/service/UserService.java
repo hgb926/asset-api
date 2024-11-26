@@ -5,7 +5,6 @@ import com.project.api.dto.request.LoginRequestDto;
 import com.project.api.dto.request.UserRequestDto;
 import com.project.api.dto.request.UserSaveDto;
 import com.project.api.dto.response.LoginResponseDto;
-import com.project.api.entity.AccountBook;
 import com.project.api.entity.EmailVerification;
 import com.project.api.entity.User;
 import com.project.api.exception.LoginFailException;
@@ -252,9 +251,8 @@ public class UserService {
                 .orElseThrow(
                         () -> new RuntimeException("회원 정보가 존재하지 않습니다.")
                 );
-        user.setAccountBooks(AccountBook.builder()
-                .user(user)
-                .build());
+        user.setCurrentMoney(0L);
+
         log.info("user - {}", user);
 
 
@@ -284,7 +282,8 @@ public class UserService {
                 .role(foundUser.getRole().toString())
                 .challenges(foundUser.getChallenges())
                 .noticeList(foundUser.getNoticeList())
-                .accountBook(foundUser.getAccountBooks())
+                .importList(foundUser.getImportList())
+                .expenseList(foundUser.getExpenseList())
                 .goalList(foundUser.getGoals())
                 .createdAt(formattedCreatedAt) // 포맷된 문자열 사용
                 .build();
