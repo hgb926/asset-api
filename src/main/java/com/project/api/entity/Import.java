@@ -25,6 +25,7 @@ public class Import {
     private String category;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference("user-import")
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -35,8 +36,8 @@ public class Import {
     @CreationTimestamp
     private LocalDateTime importAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference("accountBook-import")
-    @JoinColumn(name = "account_book_id", nullable = false)
-    private AccountBook accountBook;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JsonBackReference("accountBook-import")
+//    @JoinColumn(name = "account_book_id", nullable = false)
+//    private AccountBook accountBook;
 }
