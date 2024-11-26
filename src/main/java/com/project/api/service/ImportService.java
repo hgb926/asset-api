@@ -31,9 +31,10 @@ public class ImportService {
                 .category(dto.getCategory())
                 .description(dto.getDescription())
                 .build();
+        foundUser.getImportList().add(newImport);
         log.info("new import obj - {}", newImport);
 
         // account_book_id default value 문제
-        importRepository.save(newImport);
+
     }
 }
