@@ -189,6 +189,7 @@ public class UserService {
                     && code.equals(ev.getVerificationCode())
             ) {
                 user.setEmailVerified(true); // 변경
+                log.info("user in isMatchCode - {}", user);
                 userRepository.save(user); // update
                 emailVerificationRepository.delete(ev);
                 return true;
@@ -207,7 +208,7 @@ public class UserService {
                 .orElseThrow(
                         () -> new LoginFailException("가입된 회원이 아닙니다.")
                 );
-
+        log.info("foundUser - {}", user);
         if (!user.isEmailVerified() || user.getPassword() == null) {
             throw new LoginFailException("회원가입이 중단된 회원입니다.");
         }
@@ -250,7 +251,10 @@ public class UserService {
                 .orElseThrow(
                         () -> new RuntimeException("회원 정보가 존재하지 않습니다.")
                 );
+        user.setCurrentMoney(0L);
+
         log.info("user - {}", user);
+
 
         // db저장
         String password = dto.getPassword();
@@ -278,7 +282,8 @@ public class UserService {
                 .role(foundUser.getRole().toString())
                 .challenges(foundUser.getChallenges())
                 .noticeList(foundUser.getNoticeList())
-                .accountBook(foundUser.getAccountBooks())
+                .importList(foundUser.getImportList())
+                .expenseList(foundUser.getExpenseList())
                 .goalList(foundUser.getGoals())
                 .createdAt(formattedCreatedAt) // 포맷된 문자열 사용
                 .build();

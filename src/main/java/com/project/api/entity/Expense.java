@@ -26,18 +26,19 @@ public class Expense {
     private String category;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference("user-expense")
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     private String description;
 
-    private double amount;
+    private Long amount;
 
     @CreationTimestamp
     private LocalDateTime expenseAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference("accountBook-expense")
-    @JoinColumn(name = "account_book_id", nullable = false)
-    private AccountBook accountBook;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JsonBackReference("accountBook-expense")
+//    @JoinColumn(name = "account_book_id", nullable = false)
+//    private AccountBook accountBook;
 }

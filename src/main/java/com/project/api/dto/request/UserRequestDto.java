@@ -23,7 +23,8 @@ public class UserRequestDto {
     private String createdAt;
     private List<ChallengeParticipant> challenges;
     private List<Notice> noticeList;
-    private AccountBook accountBook;
+    private List<Expense> expenseList;
+    private List<Import> importList;
     private List<Goal> goalList;
 
 

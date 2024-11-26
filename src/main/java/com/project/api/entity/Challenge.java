@@ -38,9 +38,9 @@ public class Challenge {
 
     private String description;
 
-    private double targetAmount;
+    private Long targetAmount;
 
-    private double currentProgress;
+    private Long currentProgress;
 
     private LocalDateTime startDate;
 

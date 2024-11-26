@@ -31,6 +31,8 @@ public class User {
 
     private String nickname;
 
+    private Long currentMoney;
+
     private boolean autoLogin;
 
     private Role role;
@@ -50,13 +52,24 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Notice> noticeList = new ArrayList<>();
 
-    // User 엔터티
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private AccountBook accountBooks;
+//    // User 엔터티
+//    @JsonManagedReference
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private AccountBook accountBooks;
+
+    @Builder.Default
+    @JsonManagedReference("user-expense")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Expense> expenseList = new ArrayList<>();
+
+    @Builder.Default
+    @JsonManagedReference("user-import")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Import> importList = new ArrayList<>();
 
     @Builder.Default
     @JsonManagedReference("user-goal")
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Goal> goals = new ArrayList<>();
 
     @PrePersist

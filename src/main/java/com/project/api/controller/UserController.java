@@ -26,6 +26,7 @@ public class UserController {
     // 이메일 중복 확인
     @GetMapping("/check-email")
     public ResponseEntity<?> checkEmail(String email) {
+        log.info("email - {}", email);
         boolean flag = userService.checkEmailDuplication(email);
         return ResponseEntity.ok().body(flag);
     }
@@ -54,7 +55,7 @@ public class UserController {
     // 로그인 로직
     @PostMapping("/sign-in")
     public ResponseEntity<?> signIn(@RequestBody LoginRequestDto dto, HttpServletResponse response) {
-        log.info("lgoin request - {}", dto);
+        log.info("login request - {}", dto);
 
         try {
             LoginResponseDto loginResponse = userService.authenticate(dto);

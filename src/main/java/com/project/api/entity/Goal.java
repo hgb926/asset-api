@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "expense")
+@Table(name = "goal")
 public class Goal {
 
     @Id
@@ -27,13 +27,23 @@ public class Goal {
 
     private String category;
 
-    private double targetAmount;
+    private String description;
 
-    private double currentProgress;
+    private Long targetAmount;
+
+    private Long currentProgress;
 
     private LocalDateTime startDate;
 
     private LocalDateTime endDate;
 
+    @Column(name = "achieved", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0")
     private boolean achieved;
+
+    @PrePersist
+    public void prePersist() {
+        if (!this.achieved) {
+            this.achieved = false; // 기본값 설정
+        }
+    }
 }
