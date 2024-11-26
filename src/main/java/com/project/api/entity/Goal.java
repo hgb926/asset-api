@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "expense")
+@Table(name = "goal")
 public class Goal {
 
     @Id
@@ -27,9 +27,9 @@ public class Goal {
 
     private String category;
 
-    private double targetAmount;
+    private Long targetAmount;
 
-    private double currentProgress;
+    private Long currentProgress;
 
     private LocalDateTime startDate;
 
