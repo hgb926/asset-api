@@ -30,7 +30,7 @@ public class Import {
 
     private String description;
 
-    private double amount;
+    private Long amount;
 
     @CreationTimestamp
     private LocalDateTime importAt;
