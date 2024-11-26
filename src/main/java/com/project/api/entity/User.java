@@ -69,7 +69,7 @@ public class User {
 
     @Builder.Default
     @JsonManagedReference("user-goal")
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Goal> goals = new ArrayList<>();
 
     @PrePersist

@@ -27,6 +27,8 @@ public class Goal {
 
     private String category;
 
+    private String description;
+
     private Long targetAmount;
 
     private Long currentProgress;
@@ -35,5 +37,13 @@ public class Goal {
 
     private LocalDateTime endDate;
 
+    @Column(name = "achieved", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0")
     private boolean achieved;
+
+    @PrePersist
+    public void prePersist() {
+        if (!this.achieved) {
+            this.achieved = false; // 기본값 설정
+        }
+    }
 }
