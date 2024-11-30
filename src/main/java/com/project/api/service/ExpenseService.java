@@ -21,7 +21,7 @@ public class ExpenseService {
 
     public Expense addExpense(ExpenseSaveDto dto) {
         User foundUser = userRepository.findById(dto.getUserId()).orElseThrow(null);
-        foundUser.setCurrentMoney(foundUser.getCurrentMoney() + dto.getAmount());
+        foundUser.setCurrentMoney(foundUser.getCurrentMoney() - dto.getAmount());
         userRepository.save(foundUser);
 
         Expense newExpense = Expense.builder()
