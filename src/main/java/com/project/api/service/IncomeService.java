@@ -3,7 +3,7 @@ package com.project.api.service;
 import com.project.api.dto.request.IncomeSaveDto;
 import com.project.api.entity.Income;
 import com.project.api.entity.User;
-import com.project.api.repository.ImcomeRepository;
+import com.project.api.repository.IncomeRepository;
 import com.project.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class IncomeService {
 
-    private final ImcomeRepository imcomeRepository;
+    private final IncomeRepository incomeRepository;
     private final UserRepository userRepository;
 
 
@@ -36,5 +36,14 @@ public class IncomeService {
         return newIncome;
         // account_book_id default value 문제
 
+    }
+
+    public Income modifyIncome(Long incomeId, IncomeSaveDto dto) {
+        Income foundIc = incomeRepository.findById(incomeId).orElseThrow(null);
+        foundIc.setAmount(dto.getAmount());
+        foundIc.setCategory(dto.getCategory());
+        foundIc.setDescription(dto.getDescription());
+        incomeRepository.save(foundIc);
+        return foundIc;
     }
 }

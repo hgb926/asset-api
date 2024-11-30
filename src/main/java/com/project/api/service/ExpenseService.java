@@ -36,4 +36,13 @@ public class ExpenseService {
         expenseRepository.save(newExpense);
         return newExpense;
     }
+
+    public Expense modifyExpense(Long expenseId, ExpenseSaveDto dto) {
+        Expense foundEx = expenseRepository.findById(expenseId).orElseThrow(null);
+        foundEx.setAmount(dto.getAmount());
+        foundEx.setCategory(dto.getCategory());
+        foundEx.setDescription(dto.getDescription());
+        expenseRepository.save(foundEx);
+        return foundEx;
+    }
 }
