@@ -44,6 +44,12 @@ public class IncomeService {
         foundIc.setCategory(dto.getCategory());
         foundIc.setDescription(dto.getDescription());
         incomeRepository.save(foundIc);
+
+        User foundUser = userRepository.findById(dto.getUserId()).orElseThrow(null);
+                                // 원래 돈 - 수정 전 금액 + 수정 후 금액
+        foundUser.setCurrentMoney(foundUser.getCurrentMoney() - foundIc.getAmount() + dto.getAmount());
+        userRepository.save(foundUser);
+
         return foundIc;
     }
 

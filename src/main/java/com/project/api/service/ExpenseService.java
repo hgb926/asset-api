@@ -43,6 +43,11 @@ public class ExpenseService {
         foundEx.setCategory(dto.getCategory());
         foundEx.setDescription(dto.getDescription());
         expenseRepository.save(foundEx);
+        User foundUser = userRepository.findById(dto.getUserId()).orElseThrow(null);
+                                // 원래 돈 + 수정 전 금액 - 수정 후 금액
+        foundUser.setCurrentMoney(foundUser.getCurrentMoney() + foundEx.getAmount() - dto.getAmount());
+        userRepository.save(foundUser);
+
         return foundEx;
     }
 
