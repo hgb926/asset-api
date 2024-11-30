@@ -2,6 +2,7 @@ package com.project.api.controller;
 
 
 import com.project.api.dto.request.ImportSaveDto;
+import com.project.api.entity.Import;
 import com.project.api.service.ImportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +20,7 @@ public class ImportController {
     @PostMapping("/add-import")
     public ResponseEntity<?> addImport(@RequestBody ImportSaveDto dto) {
         log.info("save import dto - {}", dto);
-        service.addImport(dto);
-        return ResponseEntity.ok().body("saved success");
+        Import newImport = service.addImport(dto);
+        return ResponseEntity.ok().body(newImport);
     }
 }

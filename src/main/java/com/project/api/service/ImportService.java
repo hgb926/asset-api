@@ -20,7 +20,7 @@ public class ImportService {
     private final UserRepository userRepository;
 
 
-    public void addImport(ImportSaveDto dto) {
+    public Import addImport(ImportSaveDto dto) {
         User foundUser = userRepository.findById(dto.getUserId()).orElseThrow(null);
         foundUser.setCurrentMoney(foundUser.getCurrentMoney() + dto.getAmount());
         userRepository.save(foundUser);
@@ -33,7 +33,7 @@ public class ImportService {
                 .build();
         foundUser.getImportList().add(newImport);
         log.info("new import obj - {}", newImport);
-
+        return newImport;
         // account_book_id default value 문제
 
     }

@@ -19,7 +19,7 @@ public class ExpenseService {
     private final ExpenseRepository expenseRepository;
     private final UserRepository userRepository;
 
-    public void addExpense(ExpenseSaveDto dto) {
+    public Expense addExpense(ExpenseSaveDto dto) {
         User foundUser = userRepository.findById(dto.getUserId()).orElseThrow(null);
         foundUser.setCurrentMoney(foundUser.getCurrentMoney() + dto.getAmount());
         userRepository.save(foundUser);
@@ -34,5 +34,6 @@ public class ExpenseService {
         log.info("new expense obj - {} ", newExpense);
 
         expenseRepository.save(newExpense);
+        return newExpense;
     }
 }

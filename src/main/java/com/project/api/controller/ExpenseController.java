@@ -2,6 +2,7 @@ package com.project.api.controller;
 
 import com.project.api.dto.request.ExpenseSaveDto;
 import com.project.api.dto.request.ImportSaveDto;
+import com.project.api.entity.Expense;
 import com.project.api.service.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,7 @@ public class ExpenseController {
     @PostMapping("/add-expense")
     public ResponseEntity<?> addImport(@RequestBody ExpenseSaveDto dto) {
         log.info("save import dto - {}", dto);
-        service.addExpense(dto);
-        return ResponseEntity.ok().body("saved success");
+        Expense newExpense = service.addExpense(dto);
+        return ResponseEntity.ok().body(newExpense);
     }
 }
