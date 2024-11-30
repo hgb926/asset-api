@@ -38,7 +38,7 @@
 //    @Builder.Default
 //    @JsonManagedReference("import-expense")
 //    @OneToMany(mappedBy = "accountBook", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Import> importList = new ArrayList<>();
+//    private List<Income> incomeList = new ArrayList<>();
 //
 //    @CreationTimestamp
 //    private LocalDateTime createdAt;

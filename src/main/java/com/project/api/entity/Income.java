@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "import")
-public class Import {
+@Table(name = "income")
+public class Income {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,7 @@ public class Import {
     private Long amount;
 
     @CreationTimestamp
-    private LocalDateTime importAt;
+    private LocalDateTime incomeAt;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JsonBackReference("accountBook-import")
