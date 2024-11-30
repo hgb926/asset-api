@@ -1,9 +1,9 @@
 package com.project.api.service;
 
-import com.project.api.dto.request.ImportSaveDto;
-import com.project.api.entity.Import;
+import com.project.api.dto.request.IncomeSaveDto;
+import com.project.api.entity.Income;
 import com.project.api.entity.User;
-import com.project.api.repository.ImportRepository;
+import com.project.api.repository.ImcomeRepository;
 import com.project.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,26 +14,26 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @RequiredArgsConstructor
 @Transactional
-public class ImportService {
+public class IncomeService {
 
-    private final ImportRepository importRepository;
+    private final ImcomeRepository imcomeRepository;
     private final UserRepository userRepository;
 
 
-    public Import addImport(ImportSaveDto dto) {
+    public Income addIncome(IncomeSaveDto dto) {
         User foundUser = userRepository.findById(dto.getUserId()).orElseThrow(null);
         foundUser.setCurrentMoney(foundUser.getCurrentMoney() + dto.getAmount());
         userRepository.save(foundUser);
 
-        Import newImport = Import.builder()
+        Income newIncome = Income.builder()
                 .user(foundUser)
                 .amount(dto.getAmount())
                 .category(dto.getCategory())
                 .description(dto.getDescription())
                 .build();
-        foundUser.getImportList().add(newImport);
-        log.info("new import obj - {}", newImport);
-        return newImport;
+        foundUser.getIncomeList().add(newIncome);
+        log.info("new income obj - {}", newIncome);
+        return newIncome;
         // account_book_id default value 문제
 
     }

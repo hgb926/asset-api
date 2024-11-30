@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ImportSaveDto {
+public class IncomeSaveDto {
 
     private String category;
     private Long userId;

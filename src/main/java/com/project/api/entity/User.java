@@ -65,7 +65,7 @@ public class User {
     @Builder.Default
     @JsonManagedReference("user-import")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Import> importList = new ArrayList<>();
+    private List<Income> incomeList = new ArrayList<>();
 
     @Builder.Default
     @JsonManagedReference("user-goal")

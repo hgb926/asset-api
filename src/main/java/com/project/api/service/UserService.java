@@ -282,7 +282,7 @@ public class UserService {
                 .role(foundUser.getRole().toString())
                 .challenges(foundUser.getChallenges())
                 .noticeList(foundUser.getNoticeList())
-                .importList(foundUser.getImportList())
+                .incomeList(foundUser.getIncomeList())
                 .expenseList(foundUser.getExpenseList())
                 .goalList(foundUser.getGoals())
                 .createdAt(formattedCreatedAt) // 포맷된 문자열 사용

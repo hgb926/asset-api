@@ -3,7 +3,6 @@ package com.project.api.dto.request;
 import com.project.api.entity.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -24,7 +23,7 @@ public class UserRequestDto {
     private List<ChallengeParticipant> challenges;
     private List<Notice> noticeList;
     private List<Expense> expenseList;
-    private List<Import> importList;
+    private List<Income> incomeList;
     private List<Goal> goalList;
 
 
