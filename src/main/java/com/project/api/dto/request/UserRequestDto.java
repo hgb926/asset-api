@@ -20,6 +20,7 @@ public class UserRequestDto {
     private boolean autoLogin;
     private String role;
     private String createdAt;
+    private Long currentMoney;
     private List<ChallengeParticipant> challenges;
     private List<Notice> noticeList;
     private List<Expense> expenseList;

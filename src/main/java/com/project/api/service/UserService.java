@@ -280,6 +280,7 @@ public class UserService {
                 .nickname(foundUser.getNickname())
                 .autoLogin(foundUser.isAutoLogin())
                 .role(foundUser.getRole().toString())
+                .currentMoney(foundUser.getCurrentMoney())
                 .challenges(foundUser.getChallenges())
                 .noticeList(foundUser.getNoticeList())
                 .incomeList(foundUser.getIncomeList())
