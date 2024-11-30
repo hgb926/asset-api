@@ -46,4 +46,11 @@ public class IncomeService {
         incomeRepository.save(foundIc);
         return foundIc;
     }
+
+    public void deleteIncome(Long incomeId, Long userId) {
+        Income foundIc = incomeRepository.findById(incomeId).orElseThrow(null);
+        incomeRepository.delete(foundIc);
+        User foundUser = userRepository.findById(userId).orElseThrow(null);
+        foundUser.setCurrentMoney(foundUser.getCurrentMoney() - foundIc.getAmount());
+    }
 }

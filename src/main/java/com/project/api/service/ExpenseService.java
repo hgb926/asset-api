@@ -45,4 +45,11 @@ public class ExpenseService {
         expenseRepository.save(foundEx);
         return foundEx;
     }
+
+    public void deleteExpense(Long expenseId, Long userId) {
+        Expense foundEx = expenseRepository.findById(expenseId).orElseThrow(null);
+        expenseRepository.delete(foundEx);
+        User foundUser = userRepository.findById(userId).orElseThrow(null);
+        foundUser.setCurrentMoney(foundUser.getCurrentMoney() + foundEx.getAmount());
+    }
 }

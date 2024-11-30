@@ -28,4 +28,10 @@ public class ExpenseController {
         Expense modifiedExpense = service.modifyExpense(expenseId, dto);
         return ResponseEntity.ok().body(modifiedExpense);
     }
+
+    @DeleteMapping("/{expenseId}/{userId}")
+    public ResponseEntity<?> deleteExpense(@PathVariable Long expenseId, @PathVariable Long userId) {
+        service.deleteExpense(expenseId, userId);
+        return ResponseEntity.ok().body("expense deleted");
+    }
 }

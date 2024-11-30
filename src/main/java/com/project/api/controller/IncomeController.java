@@ -29,4 +29,10 @@ public class IncomeController {
         Income income = service.modifyIncome(incomeId, dto);
         return ResponseEntity.ok().body(income);
     }
+
+    @DeleteMapping("/{incomeId}/{userId}")
+    public ResponseEntity<?> deleteIncome(@PathVariable Long incomeId, @PathVariable Long userId) {
+        service.deleteIncome(incomeId, userId);
+        return ResponseEntity.ok().body("Delete income successfully");
+    }
 }
