@@ -30,7 +30,6 @@ public class NoticeService {
                     .build();
             noticeRepository.save(newNotice);
             foundUser.getNoticeList().add(newNotice);
-            log.info("foundUser.getNoticeList() {}" , foundUser.getNoticeList());
             return newNotice;
 
         } catch (Exception e) {
