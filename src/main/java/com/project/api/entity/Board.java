@@ -29,6 +29,8 @@ public class Board {
 
     private String title;
 
+    private Category category;
+
     private String content;
 
     private LocalDateTime createdAt;
@@ -46,6 +48,10 @@ public class Board {
         if (this.viewCount == null) {
             this.viewCount = 0L;
         }
+    }
+
+    private enum Category {
+        QNA, TIP, INFO
     }
 
 }
