@@ -1,7 +1,6 @@
 package com.project.api.entity;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,24 +12,25 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "challenge_participant")
-public class ChallengeParticipant {
+@Table(name = "reply")
+public class Reply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    // Challenge와 연결 (N:1 관계)
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "challenge_id", nullable = false)
-    private Challenge challenge;
-
-    // User와 연결 (N:1 관계)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @CreationTimestamp
-    private LocalDateTime joinedAt; // 참가 시점
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id", nullable = false)
+    private Board board;
+
+    private String content;
+
+    private LocalDateTime createdAt;
+
+    // 좋아요 해야함
 }

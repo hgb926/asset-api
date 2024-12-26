@@ -42,10 +42,6 @@ public class User {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Builder.Default
-    @JsonManagedReference("user-challenge-participant")
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ChallengeParticipant> challenges = new ArrayList<>();
 
     @Builder.Default
     @JsonManagedReference("user-notice")
@@ -59,7 +55,7 @@ public class User {
     private List<Expense> expenseList = new ArrayList<>();
 
     @Builder.Default
-    @JsonManagedReference("user-import")
+    @JsonManagedReference("user-income")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Income> incomeList = new ArrayList<>();
 

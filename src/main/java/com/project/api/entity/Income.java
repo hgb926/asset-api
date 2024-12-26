@@ -25,7 +25,7 @@ public class Income {
     private String category;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference("user-import")
+    @JsonBackReference("user-income")
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -36,8 +36,4 @@ public class Income {
     @CreationTimestamp
     private LocalDateTime incomeAt;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JsonBackReference("accountBook-import")
-//    @JoinColumn(name = "account_book_id", nullable = false)
-//    private AccountBook accountBook;
 }
