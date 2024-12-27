@@ -35,13 +35,17 @@ public class BoardController {
 
     @GetMapping
     public ResponseEntity<?> getAllBoard() {
-        log.info("getAllBoard 접근");
         List<BoardResponseDto> boards = boardService.getBoards()
                 .stream()
                 .map(BoardResponseDto::new)
                 .collect(Collectors.toList())
                 ;
-
         return ResponseEntity.ok().body(boards);
+    }
+
+    @GetMapping("/{boardId}")
+    public ResponseEntity<?> getBoardDetail (@PathVariable Long boardId) {
+        BoardResponseDto board = boardService.findOne(boardId);
+        return ResponseEntity.ok().body(board);
     }
 }

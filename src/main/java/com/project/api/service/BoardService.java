@@ -54,4 +54,11 @@ public class BoardService {
         return boardList;
 
     }
+
+    public BoardResponseDto findOne(Long boardId) {
+        Board foundBoard = boardRepository.findById(boardId).orElseThrow(null);
+        BoardResponseDto dto = new BoardResponseDto(foundBoard);
+        log.info("converted board dto : {}", dto);
+        return dto;
+    }
 }
