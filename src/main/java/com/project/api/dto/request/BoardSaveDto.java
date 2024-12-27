@@ -13,7 +13,7 @@ import lombok.*;
 @Builder
 public class BoardSaveDto {
 
-    private User user;
+    private Long userId;
 
     private String title;
 

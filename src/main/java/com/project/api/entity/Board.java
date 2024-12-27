@@ -5,12 +5,14 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.persistence.Convert;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
+@ToString(exclude = "user")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,8 +30,9 @@ public class Board {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    private String title;  // 이제 API 만들면 됨
+    private String title;
 
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     private String content;
