@@ -2,6 +2,7 @@ package com.project.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,12 +28,13 @@ public class Board {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    private String title;
+    private String title;  // 이제 API 만들면 됨
 
     private Category category;
 
     private String content;
 
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @Builder.Default
@@ -50,7 +52,7 @@ public class Board {
         }
     }
 
-    private enum Category {
+    public enum Category {
         QNA, TIP, INFO
     }
 

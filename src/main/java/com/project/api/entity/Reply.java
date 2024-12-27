@@ -1,6 +1,7 @@
 package com.project.api.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -30,6 +31,7 @@ public class Reply {
 
     private String content;
 
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     // 좋아요 해야함
