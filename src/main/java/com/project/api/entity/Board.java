@@ -45,7 +45,7 @@ public class Board {
     @Builder.Default
     @JsonManagedReference("board-reply")
     @OneToMany(mappedBy = "board", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
-    private List<Reply> replyList = new ArrayList<>();
+    private List<Reply> replies = new ArrayList<>();
 
     private Long viewCount;
 

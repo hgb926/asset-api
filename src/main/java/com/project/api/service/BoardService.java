@@ -57,6 +57,8 @@ public class BoardService {
 
     public BoardResponseDto findOne(Long boardId) {
         Board foundBoard = boardRepository.findById(boardId).orElseThrow(null);
+        foundBoard.setViewCount(foundBoard.getViewCount() + 1);
+        boardRepository.save(foundBoard);
         BoardResponseDto dto = new BoardResponseDto(foundBoard);
         log.info("converted board dto : {}", dto);
         return dto;
