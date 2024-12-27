@@ -22,7 +22,7 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @PostMapping
-    public ResponseEntity<?> addNotice(NoticeSaveDto dto) {
+    public ResponseEntity<?> addNotice(@RequestBody NoticeSaveDto dto) {
         log.info("notice save dto: {}", dto);
         Notice notice = noticeService.addNotice(dto);
         return ResponseEntity.ok().body(notice);
