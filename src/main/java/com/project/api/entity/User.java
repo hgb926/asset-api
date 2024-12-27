@@ -1,5 +1,6 @@
 package com.project.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -49,7 +50,7 @@ public class User {
     private List<Notice> noticeList = new ArrayList<>();
 
     @Builder.Default
-    @JsonManagedReference("user-board")
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Board> boardList = new ArrayList<>();
 

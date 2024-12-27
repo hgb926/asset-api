@@ -10,4 +10,9 @@ import lombok.*;
 @Builder
 public class ReplySaveDto {
 
+    private Long userId;
+    private Long boardId;
+    private String content;
+
+
 }

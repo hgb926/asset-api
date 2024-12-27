@@ -1,8 +1,13 @@
 package com.project.api.controller;
 
+import com.project.api.dto.request.ReplySaveDto;
+import com.project.api.entity.Reply;
 import com.project.api.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,5 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReplyController {
     private final ReplyService replyService;
 
-
+    @PostMapping
+    public ResponseEntity<?> saveReply(@RequestBody ReplySaveDto dto) {
+        log.info("ReplySaveDto : {} ", dto.toString());
+        Reply newReply = replyService.saveReply(dto);
+        log.info("new Reply : {}", newReply.toString());
+        return ResponseEntity.ok().body(newReply);
+    }
 }
