@@ -19,7 +19,7 @@ public class ReplyController {
     public ResponseEntity<?> saveReply(@RequestBody ReplySaveDto dto) {
         log.info("ReplySaveDto : {} ", dto.toString());
         Reply newReply = replyService.saveReply(dto);
-        log.info("new Reply : {}", newReply.toString());
+        log.info("new Reply : {}", newReply);
         return ResponseEntity.ok().body(newReply);
     }
 

@@ -33,7 +33,9 @@ public class ReplyService {
                 .board(foundBoard)
                 .user(foundUser)
                 .build();
+
         replyRepository.save(newReply);
+
         return newReply;
     }
 }
