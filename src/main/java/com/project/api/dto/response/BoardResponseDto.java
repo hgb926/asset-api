@@ -25,7 +25,6 @@ public class BoardResponseDto {
     private String content;
     private String createdAt;
     private Integer replyCount;
-    private List<Reply> replies;
     private Long viewCount;
 
     public BoardResponseDto(Board board) {
@@ -36,10 +35,8 @@ public class BoardResponseDto {
         this.title = board.getTitle();
         this.content = board.getContent();
         this.replyCount = board.getReplies().size();
-        this.replies = board.getReplies();
         this.viewCount = board.getViewCount();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         this.createdAt = board.getCreatedAt().format(formatter);
-
     }
 }
