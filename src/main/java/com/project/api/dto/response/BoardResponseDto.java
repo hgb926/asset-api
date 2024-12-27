@@ -5,6 +5,7 @@ import com.project.api.entity.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @ToString
@@ -20,7 +21,7 @@ public class BoardResponseDto {
     private String category;
     private String title;
     private String content;
-    private LocalDateTime createdAt;
+    private String createdAt;
     private Integer replyCount;
     private Long viewCount;
 
@@ -31,9 +32,10 @@ public class BoardResponseDto {
         this.category = board.getCategory().toString();
         this.title = board.getTitle();
         this.content = board.getContent();
-        this.createdAt = board.getCreatedAt();
         this.replyCount = board.getReplyList().size();
         this.viewCount = board.getViewCount();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        this.createdAt = board.getCreatedAt().format(formatter);
 
     }
 }

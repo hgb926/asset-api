@@ -35,7 +35,7 @@ public class BoardController {
 
     @GetMapping
     public ResponseEntity<?> getAllBoard() {
-
+        log.info("getAllBoard 접근");
         List<BoardResponseDto> boards = boardService.getBoards()
                 .stream()
                 .map(BoardResponseDto::new)
