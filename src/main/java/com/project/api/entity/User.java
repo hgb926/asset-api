@@ -48,6 +48,11 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Notice> noticeList = new ArrayList<>();
 
+    @Builder.Default
+    @JsonManagedReference("user-board")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Board> boardList = new ArrayList<>();
+
 
     @Builder.Default
     @JsonManagedReference("user-expense")
