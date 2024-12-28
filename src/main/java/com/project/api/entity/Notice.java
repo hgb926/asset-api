@@ -1,5 +1,6 @@
 package com.project.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -22,8 +23,12 @@ public class Notice {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference("user-notice")
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
     @Column(nullable = false)
     private String message;
@@ -33,4 +38,12 @@ public class Notice {
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    private Long boardId;
+
+    private Long goalId;
+
+    public enum Type {
+        목표, 커뮤니티, 알림
+    }
 }

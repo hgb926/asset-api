@@ -1,5 +1,6 @@
 package com.project.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -42,20 +43,17 @@ public class User {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Builder.Default
-    @JsonManagedReference("user-challenge-participant")
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ChallengeParticipant> challenges = new ArrayList<>();
 
     @Builder.Default
     @JsonManagedReference("user-notice")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Notice> noticeList = new ArrayList<>();
 
-//    // User 엔터티
-//    @JsonManagedReference
-//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private AccountBook accountBooks;
+    @Builder.Default
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Board> boardList = new ArrayList<>();
+
 
     @Builder.Default
     @JsonManagedReference("user-expense")
@@ -63,7 +61,7 @@ public class User {
     private List<Expense> expenseList = new ArrayList<>();
 
     @Builder.Default
-    @JsonManagedReference("user-import")
+    @JsonManagedReference("user-income")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Income> incomeList = new ArrayList<>();
 

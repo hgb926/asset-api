@@ -21,7 +21,6 @@ public class UserRequestDto {
     private String role;
     private String createdAt;
     private Long currentMoney;
-    private List<ChallengeParticipant> challenges;
     private List<Notice> noticeList;
     private List<Expense> expenseList;
     private List<Income> incomeList;

@@ -37,8 +37,4 @@ public class Expense {
     @CreationTimestamp
     private LocalDateTime expenseAt;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JsonBackReference("accountBook-expense")
-//    @JoinColumn(name = "account_book_id", nullable = false)
-//    private AccountBook accountBook;
 }
