@@ -28,4 +28,11 @@ public class NoticeController {
         return ResponseEntity.ok().body(notice);
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> findNoticeList(@PathVariable Long userId) {
+        log.info("userID = {} ", userId);
+        List<Notice> noticeList = noticeService.findNoticeList(userId);
+        return ResponseEntity.ok().body(noticeList);
+    }
+
 }

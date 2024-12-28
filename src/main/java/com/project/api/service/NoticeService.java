@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -33,5 +35,13 @@ public class NoticeService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Notice> findNoticeList(Long userId) {
+        List<Notice> foundList = noticeRepository.findByUserId(userId);
+        for (Notice notice : foundList) {
+            System.out.println(notice.toString());
+        }
+        return foundList;
     }
 }
