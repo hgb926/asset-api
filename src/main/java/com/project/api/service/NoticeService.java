@@ -42,7 +42,7 @@ public class NoticeService {
         foundUser.getNoticeList().add(newNotice);
 
         // SSE 알림 전송
-        sseService.sendNotification(
+        sseService.sendNotice(
                 foundUser.getId(),
                 dto.getMessage(),
                 dto.getType().toString(),

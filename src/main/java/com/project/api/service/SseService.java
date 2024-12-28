@@ -30,7 +30,7 @@ public class SseService {
     /**
      * 특정 사용자에게 알림 전송
      */
-    public void sendNotification(Long userId, String message, String type, Long boardId, Long goalId) {
+    public void sendNotice(Long userId, String message, String type, Long boardId, Long goalId) {
         SseEmitter emitter = emitters.get(userId);
         log.info("userId {}, message {}, type {}, boardId {}, goalId {} ", userId, message, type, boardId, goalId);
         if (emitter != null) {
