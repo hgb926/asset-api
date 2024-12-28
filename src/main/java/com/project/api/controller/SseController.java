@@ -1,32 +1,21 @@
 package com.project.api.controller;
 
+import com.project.api.service.SseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import java.io.IOException;
-
 @RestController
+@RequiredArgsConstructor
+@RequestMapping("/sse")
 public class SseController {
 
-    @GetMapping(value = "/sse", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter streamSseMvc() throws Exception {
-        SseEmitter emitter = new SseEmitter();
+    private final SseService sseService;
 
-        // 새로운 Thread로 실행
-        new Thread(() -> {
-            try {
-                for (int i = 0; i < 3; i++) {
-                    emitter.send(SseEmitter.event().data("Sse event! " + System.currentTimeMillis()));
-                    Thread.sleep(1000);  // 1초 대기
-                }
-                emitter.complete();
-            } catch (IOException | InterruptedException e) {
-                emitter.completeWithError(e);
-            }
-        }).start();
-
-        return emitter;
+    // SSE 연결 설정
+    @GetMapping(value = "/connect/{userId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter connect(@PathVariable Long userId) {
+        return sseService.connect(userId);
     }
 }

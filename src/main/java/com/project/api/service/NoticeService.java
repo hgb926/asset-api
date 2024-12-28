@@ -1,7 +1,6 @@
 package com.project.api.service;
 
 import com.project.api.dto.request.NoticeSaveDto;
-import com.project.api.dto.response.NoticeResponseDto;
 import com.project.api.entity.Notice;
 import com.project.api.entity.User;
 import com.project.api.repository.NoticeRepository;
@@ -18,38 +17,55 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class NoticeService {
+
     private final UserRepository userRepository;
     private final NoticeRepository noticeRepository;
+    private final SseService sseService;
 
+    /**
+     * 알림 저장 및 SSE 전송
+     */
     public Notice addNotice(NoticeSaveDto dto) {
-        try {
-            User foundUser = userRepository.findById(dto.getUserId()).orElseThrow(null);
-            Notice newNotice = Notice.builder()
-                    .user(foundUser)
-                    .message(dto.getMessage())
-                    .type(dto.getType())
-                    .isClicked(false)
-                    .build();
+        User foundUser = userRepository.findById(dto.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-            if (dto.getBoardId() != null) newNotice.setBoardId(dto.getBoardId());
-            if (dto.getGoalId() != null) newNotice.setGoalId(dto.getGoalId());
+        Notice newNotice = Notice.builder()
+                .user(foundUser)
+                .message(dto.getMessage())
+                .type(dto.getType())
+                .isClicked(false)
+                .boardId(dto.getBoardId())
+                .goalId(dto.getGoalId())
+                .build();
 
-            noticeRepository.save(newNotice);
-            foundUser.getNoticeList().add(newNotice);
-            return newNotice;
+        noticeRepository.save(newNotice);
+        foundUser.getNoticeList().add(newNotice);
 
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        // SSE 알림 전송
+        sseService.sendNotice(
+                foundUser.getId(),
+                dto.getMessage(),
+                dto.getType().toString(),
+                dto.getBoardId(),
+                dto.getGoalId()
+        );
+
+        return newNotice;
     }
 
+    /**
+     * 사용자 알림 목록 조회
+     */
     public List<Notice> findNoticeList(Long userId) {
-        List<Notice> foundList = noticeRepository.findByUserId(userId);
-        return foundList;
+        return noticeRepository.findByUserId(userId);
     }
 
+    /**
+     * 알림 클릭 이벤트 처리
+     */
     public void clickEvent(Long id) {
-        Notice foundNotice = noticeRepository.findById(id).orElseThrow();
+        Notice foundNotice = noticeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Notice not found"));
         foundNotice.setClicked(true);
         noticeRepository.save(foundNotice);
     }
