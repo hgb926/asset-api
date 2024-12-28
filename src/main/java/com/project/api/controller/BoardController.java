@@ -38,8 +38,8 @@ public class BoardController {
         List<BoardResponseDto> boards = boardService.getBoards()
                 .stream()
                 .map(BoardResponseDto::new)
-                .collect(Collectors.toList())
-                ;
+                .collect(Collectors.toList());
+
         return ResponseEntity.ok().body(boards);
     }
 

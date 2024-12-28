@@ -40,9 +40,6 @@ public class NoticeService {
 
     public List<Notice> findNoticeList(Long userId) {
         List<Notice> foundList = noticeRepository.findByUserId(userId);
-        for (Notice notice : foundList) {
-            System.out.println(notice.toString());
-        }
         return foundList;
     }
 }

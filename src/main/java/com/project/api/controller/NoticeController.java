@@ -1,6 +1,7 @@
 package com.project.api.controller;
 
 import com.project.api.dto.request.NoticeSaveDto;
+import com.project.api.dto.response.NoticeResponseDto;
 import com.project.api.entity.Notice;
 import com.project.api.service.NoticeService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/notice")
@@ -31,7 +33,11 @@ public class NoticeController {
     @GetMapping("/{userId}")
     public ResponseEntity<?> findNoticeList(@PathVariable Long userId) {
         log.info("userID = {} ", userId);
-        List<Notice> noticeList = noticeService.findNoticeList(userId);
+        List<NoticeResponseDto> noticeList = noticeService.findNoticeList(userId)
+                .stream()
+                .map(NoticeResponseDto::new)
+                .collect(Collectors.toList());
+
         return ResponseEntity.ok().body(noticeList);
     }
 
