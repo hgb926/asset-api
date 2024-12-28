@@ -27,6 +27,9 @@ public class Notice {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Enumerated(EnumType.STRING)
+    private Category type;
+
     @Column(nullable = false)
     private String message;
 
@@ -35,4 +38,8 @@ public class Notice {
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    public enum Category {
+        목표, 커뮤니티, 알림
+    }
 }

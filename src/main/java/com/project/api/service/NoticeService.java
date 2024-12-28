@@ -26,6 +26,7 @@ public class NoticeService {
             Notice newNotice = Notice.builder()
                     .user(foundUser)
                     .message(dto.getMessage())
+                    .type(dto.getType())
                     .isClicked(false)
                     .build();
             noticeRepository.save(newNotice);
