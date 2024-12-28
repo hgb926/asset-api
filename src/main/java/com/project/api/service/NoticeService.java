@@ -1,6 +1,7 @@
 package com.project.api.service;
 
 import com.project.api.dto.request.NoticeSaveDto;
+import com.project.api.dto.response.NoticeResponseDto;
 import com.project.api.entity.Notice;
 import com.project.api.entity.User;
 import com.project.api.repository.NoticeRepository;
@@ -45,5 +46,11 @@ public class NoticeService {
     public List<Notice> findNoticeList(Long userId) {
         List<Notice> foundList = noticeRepository.findByUserId(userId);
         return foundList;
+    }
+
+    public void clickEvent(Long id) {
+        Notice foundNotice = noticeRepository.findById(id).orElseThrow();
+        foundNotice.setClicked(true);
+        noticeRepository.save(foundNotice);
     }
 }
