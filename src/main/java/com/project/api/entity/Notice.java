@@ -39,6 +39,10 @@ public class Notice {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    private Long boardId;
+
+    private Long goalId;
+
     public enum Type {
         목표, 커뮤니티, 알림
     }

@@ -29,6 +29,10 @@ public class NoticeService {
                     .type(dto.getType())
                     .isClicked(false)
                     .build();
+
+            if (dto.getBoardId() != null) newNotice.setBoardId(dto.getBoardId());
+            if (dto.getGoalId() != null) newNotice.setGoalId(dto.getGoalId());
+
             noticeRepository.save(newNotice);
             foundUser.getNoticeList().add(newNotice);
             return newNotice;

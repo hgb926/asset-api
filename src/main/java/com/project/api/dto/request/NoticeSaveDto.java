@@ -15,4 +15,6 @@ public class NoticeSaveDto {
     private Long userId;
     private String message;
     private Type type;
+    private Long boardId;
+    private Long goalId;
 }
