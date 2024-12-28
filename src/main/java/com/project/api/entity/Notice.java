@@ -28,7 +28,7 @@ public class Notice {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    private Category type;
+    private Type type;
 
     @Column(nullable = false)
     private String message;
@@ -39,7 +39,7 @@ public class Notice {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    public enum Category {
+    public enum Type {
         목표, 커뮤니티, 알림
     }
 }
