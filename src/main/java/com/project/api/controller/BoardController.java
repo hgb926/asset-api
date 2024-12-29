@@ -8,6 +8,7 @@ import com.project.api.entity.Board;
 import com.project.api.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -33,14 +34,19 @@ public class BoardController {
         return ResponseEntity.badRequest().body("내용이 비어있습니다.");
     }
 
+    /**
+     * 게시판 목록 (페이징)
+     * @param page 페이지 번호 (0부터 시작)
+     * @param size 페이지당 항목 수
+     * @return Page<BoardResponseDto>
+     */
     @GetMapping
-    public ResponseEntity<?> getAllBoard() {
-        List<BoardResponseDto> boards = boardService.getBoards()
-                .stream()
-                .map(BoardResponseDto::new)
-                .collect(Collectors.toList());
+    public ResponseEntity<?> getAllBoard(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
 
-        return ResponseEntity.ok().body(boards);
+        Page<BoardResponseDto> boardPage = boardService.getBoards(page, size);
+        return ResponseEntity.ok(boardPage);
     }
 
     @GetMapping("/{boardId}")

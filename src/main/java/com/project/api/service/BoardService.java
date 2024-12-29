@@ -46,13 +46,17 @@ public class BoardService {
         }
     }
 
+    /**
+     * 페이징된 게시글 목록 반환
+     * @param page 페이지 번호 (0부터 시작)
+     * @param size 페이지당 항목 수
+     * @return Page<BoardResponseDto>
+     */
+    public Page<BoardResponseDto> getBoards(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size); // 페이지 번호와 페이지 크기 설정
+        Page<Board> boardPage = boardRepository.findAll(pageable);
 
-    public List<Board> getBoards() {
-        List<Board> boardList = boardRepository.findAll();
-
-        Collections.reverse(boardList);
-        return boardList;
-
+        return boardPage.map(BoardResponseDto::new);
     }
 
     public BoardResponseDto findOne(Long boardId) {
