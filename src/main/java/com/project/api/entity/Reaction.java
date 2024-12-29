@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@ToString(exclude = {"user", "board", "reply"})
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -43,6 +44,7 @@ public class Reaction {
 
     @Enumerated(EnumType.STRING)
     private ReactionTargetType targetType;
+
 
     @CreationTimestamp
     private LocalDateTime createdAt;

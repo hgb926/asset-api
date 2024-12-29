@@ -24,6 +24,9 @@ public class ReactionController {
     public ResponseEntity<?> saveReaction(@RequestBody ReactionSaveDto dto) {
         log.info("reaction save dto : {}", dto);
         Reaction newReaction = reactionService.saveReaction(dto);
-        return ResponseEntity.ok().body(newReaction);
+        if (newReaction != null) {
+            return ResponseEntity.ok().body(newReaction);
+        }
+        return ResponseEntity.badRequest().body("이미 있음.");
     }
 }
