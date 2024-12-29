@@ -14,6 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import static com.project.api.entity.Reaction.*;
+
 @Service
 @Transactional
 @Slf4j
@@ -25,18 +30,17 @@ public class ReactionService {
     private final ReplyRepository replyRepository;
     private final UserRepository userRepository;
 
-    // 처음 리액션을 한다? -> 좋아요든 싫어요든 INSERT
-    // 기존 리액션을 취소한다? -> 기존 데이터를 DELETE
-    // 기존 리액션을 변경한다?
-    // -> 기존 리액션 데이터를 DELETE 후 새로운 리액션을 INSERT
+    @PersistenceContext
+    private final EntityManager entityManager;
 
-    // 현재 게시물에 특정 사용자가 리액션을 했는지 확인
-
+    /**
+     * 리액션 저장 또는 삭제
+     */
     public Reaction saveReaction(ReactionSaveDto dto) {
+        User foundUser = userRepository.findById(dto.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        User foundUser = userRepository.findById(dto.getUserId()).orElseThrow();
-        log.info("Reactions : {}", foundUser.getReactions());
-        // 유저쪽은 아직 저장 안함
+        log.info("Reactions: {}", foundUser.getReactions());
 
         Reaction newReaction = Reaction.builder()
                 .reactionType(dto.getReactionType())
@@ -44,30 +48,67 @@ public class ReactionService {
                 .user(foundUser)
                 .build();
 
-        if (dto.getTargetType() == Reaction.ReactionTargetType.REPLY) {
-
-            if (reactionRepository.existsByUserIdAndReplyId(dto.getUserId(), dto.getReplyId())) {
-                // 이미 존재하는 경우
-                log.info("이미 있음");
-                return null;
-            }
-
-            Reply targetReply = replyRepository.findById(dto.getReplyId()).orElseThrow();
-            newReaction.setReply(targetReply);
-            replyRepository.save(targetReply);
-        } else if (dto.getTargetType() == Reaction.ReactionTargetType.BOARD) {
-
-            if (reactionRepository.existsByUserIdAndBoardId(dto.getUserId(), dto.getBoardId())) {
-                // 이미 존재하는 경우
-                log.info("이미 있음");
-                return null;
-            }
-            Board targetBoard = boardRepository.findById(dto.getBoardId()).orElseThrow();
-            newReaction.setBoard(targetBoard);
-            boardRepository.save(targetBoard);
+        if (dto.getTargetType() == ReactionTargetType.REPLY) {
+            return handleReplyReaction(dto, newReaction);
+        } else if (dto.getTargetType() == ReactionTargetType.BOARD) {
+            return handleBoardReaction(dto, newReaction);
         }
-        log.info("new Reaction : {} ", newReaction);
-        reactionRepository.save(newReaction);
-        return newReaction;
+
+        throw new IllegalArgumentException("Invalid ReactionTargetType");
     }
+
+    /**
+     * 댓글 리액션 처리
+     */
+    private Reaction handleReplyReaction(ReactionSaveDto dto, Reaction newReaction) {
+        boolean exists = reactionRepository.existsByUserIdAndReplyIdAndReactionType(
+                dto.getUserId(), dto.getReplyId(), dto.getReactionType()
+        );
+
+        if (exists) {
+            Reaction foundReaction = reactionRepository.findByUserIdAndReplyIdAndReactionType(
+                    dto.getUserId(), dto.getReplyId(), dto.getReactionType()
+            );
+            reactionRepository.delete(foundReaction);
+            entityManager.flush(); // 즉시 데이터베이스에 반영
+            entityManager.clear(); // 영속성 컨텍스트 초기화
+            log.info("Reaction deleted: {}", foundReaction);
+            return null; // 동일한 리액션이라면 삭제만 수행
+        }
+
+        Reply targetReply = replyRepository.findById(dto.getReplyId())
+                .orElseThrow(() -> new IllegalArgumentException("Reply not found"));
+
+        newReaction.setReply(targetReply);
+        log.info("New Reaction: {}", newReaction);
+        return reactionRepository.save(newReaction);
+    }
+
+    /**
+     * 게시글 리액션 처리
+     */
+    private Reaction handleBoardReaction(ReactionSaveDto dto, Reaction newReaction) {
+        boolean exists = reactionRepository.existsByUserIdAndBoardIdAndReactionType(
+                dto.getUserId(), dto.getBoardId(), dto.getReactionType()
+        );
+
+        if (exists) {
+            Reaction foundReaction = reactionRepository.findByUserIdAndBoardIdAndReactionType(
+                    dto.getUserId(), dto.getBoardId(), dto.getReactionType()
+            );
+            reactionRepository.delete(foundReaction);
+            entityManager.flush(); // 즉시 데이터베이스에 반영
+            entityManager.clear(); // 영속성 컨텍스트 초기화
+            log.info("Reaction deleted: {}", foundReaction);
+            return null; // 동일한 리액션이라면 삭제만 수행
+        }
+
+        Board targetBoard = boardRepository.findById(dto.getBoardId())
+                .orElseThrow(() -> new IllegalArgumentException("Board not found"));
+
+        newReaction.setBoard(targetBoard);
+        log.info("New Reaction: {}", newReaction);
+        return reactionRepository.save(newReaction);
+    }
+
 }
