@@ -37,7 +37,13 @@ public class Goal {
 
     private LocalDateTime startDate;
 
+    private Long influencedMoney;
+
+    private String type;
+
     private LocalDateTime endDate;
+
+    private LocalDateTime createdAt;
 
     @Column(name = "achieved", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0")
     private boolean achieved;
