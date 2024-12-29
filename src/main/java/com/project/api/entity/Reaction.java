@@ -45,11 +45,8 @@ public class Reaction {
     @Enumerated(EnumType.STRING)
     private ReactionTargetType targetType;
 
-
     @CreationTimestamp
     private LocalDateTime createdAt;
-
-
 
     public enum ReactionType {
         LIKE, DISLIKE
@@ -60,5 +57,16 @@ public class Reaction {
         REPLY
     }
 
-
+    @PreRemove
+    public void preRemove() {
+        if (this.board != null) {
+            this.board.getReactions().remove(this);
+        }
+        if (this.reply != null) {
+            this.reply.getReactions().remove(this);
+        }
+        if (this.user != null) {
+            this.user.getReactions().remove(this);
+        }
+    }
 }
