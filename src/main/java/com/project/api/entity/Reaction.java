@@ -3,6 +3,7 @@ package com.project.api.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -23,12 +24,12 @@ public class Reaction {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id", nullable = false)
+    @JoinColumn(name = "board_id")
     @JsonIgnore
     private Board board;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reply_id", nullable = false)
+    @JoinColumn(name = "reply_id")
     @JsonIgnore
     private Reply reply;
 
@@ -37,10 +38,13 @@ public class Reaction {
     @JsonIgnore
     private User user;
 
+    @Enumerated(EnumType.STRING)
     private ReactionType reactionType;
 
+    @Enumerated(EnumType.STRING)
     private ReactionTargetType targetType;
 
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
 
