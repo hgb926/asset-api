@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,7 +54,7 @@ public class BoardService {
      * @return Page<BoardResponseDto>
      */
     public Page<BoardResponseDto> getBoards(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size); // 페이지 번호와 페이지 크기 설정
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         Page<Board> boardPage = boardRepository.findAll(pageable);
 
         return boardPage.map(BoardResponseDto::new);

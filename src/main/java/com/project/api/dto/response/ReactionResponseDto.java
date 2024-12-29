@@ -14,7 +14,6 @@ public class ReactionResponseDto {
     private Long boardId;
     private Long replyId;
     private Long userId;
-//    private String targetType;
     private String reactionType;
 
     public ReactionResponseDto(Reaction reaction) {
@@ -26,7 +25,6 @@ public class ReactionResponseDto {
             this.boardId = 0L;
         }
         this.userId = reaction.getUser().getId();
-//        this.targetType = reaction.getTargetType().toString();
         this.reactionType = reaction.getReactionType().toString();
     }
 }
