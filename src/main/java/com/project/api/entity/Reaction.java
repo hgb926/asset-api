@@ -1,6 +1,7 @@
 package com.project.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,17 +24,17 @@ public class Reaction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id", nullable = false)
-    @JsonBackReference("board-reaction")
+    @JsonIgnore
     private Board board;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false)
-    @JsonBackReference("reply-reaction")
+    @JoinColumn(name = "reply_id", nullable = false)
+    @JsonIgnore
     private Reply reply;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    @JsonBackReference("user-reaction")
+    @JsonIgnore
     private User user;
 
     private ReactionType reactionType;

@@ -48,9 +48,13 @@ public class Board {
     @OneToMany(mappedBy = "board", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Reply> replies = new ArrayList<>();
 
+    @Builder.Default
+    @JsonIgnore
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reaction> reactions = new ArrayList<>();
+
     private Long viewCount;
 
-    // 좋아요 해야함
     @PrePersist
     public void prePersist() {
         if (this.viewCount == null) {
