@@ -22,6 +22,7 @@ public class BoardResponseDto {
     private String createdAt;
     private Integer replyCount;
     private List<ReplyResponseDto> replies; // Reply DTO 사용
+    private List<ReactionResponseDto> reactions;
     private Long viewCount;
 
     public BoardResponseDto(Board board) {
@@ -36,6 +37,10 @@ public class BoardResponseDto {
                 .stream()
                 .map(ReplyResponseDto::new)
                 .collect(Collectors.toList()); // Reply 엔티티를 ReplyResponseDto로 변환
+        this.reactions = board.getReactions()
+                .stream()
+                .map(ReactionResponseDto::new)
+                .collect(Collectors.toList());
         this.viewCount = board.getViewCount();
         this.createdAt = board.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
