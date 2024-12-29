@@ -23,6 +23,8 @@ public class BoardResponseDto {
     private Integer replyCount;
     private List<ReplyResponseDto> replies; // Reply DTO 사용
     private List<ReactionResponseDto> reactions;
+    private Long likeCount;
+    private Long dislikeCount;
     private Long viewCount;
 
     public BoardResponseDto(Board board) {
@@ -41,6 +43,8 @@ public class BoardResponseDto {
                 .stream()
                 .map(ReactionResponseDto::new)
                 .collect(Collectors.toList());
+        this.likeCount = board.getLikeCount(board.getReactions());
+        this.dislikeCount = board.getDislikeCount(board.getReactions());
         this.viewCount = board.getViewCount();
         this.createdAt = board.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }

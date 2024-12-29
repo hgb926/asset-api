@@ -39,12 +39,10 @@ public class ReactionService {
         if (dto.getTargetType() == Reaction.ReactionTargetType.REPLY) {
             Reply targetReply = replyRepository.findById(dto.getReplyId()).orElseThrow();
             newReaction.setReply(targetReply);
-            targetReply.getReactions().add(newReaction);
             replyRepository.save(targetReply);
         } else if (dto.getTargetType() == Reaction.ReactionTargetType.BOARD) {
             Board targetBoard = boardRepository.findById(dto.getBoardId()).orElseThrow();
             newReaction.setBoard(targetBoard);
-            targetBoard.getReactions().add(newReaction);
             boardRepository.save(targetBoard);
         }
         log.info("new Reaction : {} ", newReaction);
