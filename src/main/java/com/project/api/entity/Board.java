@@ -68,13 +68,13 @@ public class Board {
 
     public Long getLikeCount(List<Reaction> reactions) {
         return reactions.stream().filter(r ->
-            r.getReactionType() != Reaction.ReactionType.LIKE)
+            r.getReactionType() == Reaction.ReactionType.LIKE)
                 .count();
     }
 
     public Long getDislikeCount(List<Reaction> reactions) {
         return reactions.stream().filter(r ->
-                r.getReactionType() != Reaction.ReactionType.DISLIKE)
+                r.getReactionType() == Reaction.ReactionType.DISLIKE)
                 .count();
     }
 
