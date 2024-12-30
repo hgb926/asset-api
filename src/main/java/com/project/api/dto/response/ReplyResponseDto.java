@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -18,6 +19,7 @@ public class ReplyResponseDto {
     private String createdAt;
     private Long likeCount;
     private Long dislikeCount;
+    private List<ReactionResponseDto> reactions;
 
     public ReplyResponseDto(Reply reply) {
         this.id = reply.getId();
@@ -26,5 +28,6 @@ public class ReplyResponseDto {
         this.createdAt = reply.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.likeCount = reply.getLikeCount(reply.getReactions());
         this.dislikeCount = reply.getDislikeCount(reply.getReactions());
+        this.reactions = reply.getReactions().stream().map(ReactionResponseDto::new).collect(Collectors.toList());
     }
 }
