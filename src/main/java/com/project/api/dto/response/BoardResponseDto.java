@@ -3,6 +3,7 @@ package com.project.api.dto.response;
 import com.project.api.entity.Board;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +28,7 @@ public class BoardResponseDto {
     private Long dislikeCount;
     private Long viewCount;
     private boolean isModified;
+    private String modifiedAt;
 
     public BoardResponseDto(Board board) {
         this.id = board.getId();
@@ -49,5 +51,8 @@ public class BoardResponseDto {
         this.viewCount = board.getViewCount();
         this.createdAt = board.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.isModified = board.isModified();
+        if (board.getModifiedAt() != null) {
+            this.modifiedAt = board.getModifiedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        }
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -76,6 +77,7 @@ public class BoardService {
         foundBoard.setContent(dto.getContent());
         foundBoard.setCategory(dto.getCategory());
         foundBoard.setModified(true);
+        foundBoard.setModifiedAt(LocalDateTime.now());
         boardRepository.save(foundBoard);
         BoardResponseDto modifiedBoard = new BoardResponseDto(foundBoard);
         return modifiedBoard;

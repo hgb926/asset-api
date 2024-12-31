@@ -56,6 +56,7 @@ public class Board {
     private Long viewCount;
 
     private boolean isModified;
+    private LocalDateTime modifiedAt;
 
     @PrePersist
     public void prePersist() {
