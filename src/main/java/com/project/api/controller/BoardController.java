@@ -54,12 +54,4 @@ public class BoardController {
         BoardResponseDto board = boardService.findOne(boardId);
         return ResponseEntity.ok().body(board);
     }
-
-    @DeleteMapping("/{boardId}")
-    public ResponseEntity<?> deleteBoard(@PathVariable Long boardId) {
-        log.info("boardId : {}", boardId);
-        boardService.deleteBoard(boardId);
-        log.info("board deleted : {}", boardId);
-        return ResponseEntity.ok().body("삭제 완료");
-    }
 }

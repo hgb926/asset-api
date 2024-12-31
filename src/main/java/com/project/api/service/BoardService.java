@@ -15,7 +15,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -28,9 +27,6 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
-    private final EntityManager entityManager;
-
-
 
     public Board saveBoard(BoardSaveDto dto) {
         if (dto.getTitle() == null || dto.getContent() == null) {
@@ -71,22 +67,5 @@ public class BoardService {
         BoardResponseDto dto = new BoardResponseDto(foundBoard);
         log.info("converted board dto : {}", dto);
         return dto;
-    }
-
-    public void deleteBoard(Long id) {
-        Board foundBoard = boardRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Board not found"));
-
-        // 1. 연관 관계 해제
-        foundBoard.removeAssociations();
-
-        // 2. 영속성 컨텍스트 동기화
-        entityManager.flush();
-        entityManager.clear();
-
-        // 3. 게시글 삭제
-        boardRepository.delete(foundBoard);
-
-        log.info("Board successfully deleted: {}", id);
     }
 }

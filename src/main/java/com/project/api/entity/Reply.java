@@ -30,8 +30,8 @@ public class Reply {
     private User user;
 
     @Builder.Default
-    @OneToMany(mappedBy = "reply", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
+    @OneToMany(mappedBy = "reply", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reaction> reactions = new ArrayList<>();
 
     @JsonIgnore
@@ -54,13 +54,6 @@ public class Reply {
         return reactions.stream().filter(r ->
                         r.getReactionType() == Reaction.ReactionType.DISLIKE)
                 .count();
-    }
-
-    // 연관관계 해제 메서드 추가
-    public void removeAssociations() {
-        this.reactions.forEach(reaction -> reaction.setReply(null));
-        this.reactions.clear();
-        this.board = null;
     }
 
 }

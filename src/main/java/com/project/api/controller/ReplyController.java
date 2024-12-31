@@ -23,10 +23,4 @@ public class ReplyController {
         return ResponseEntity.ok().body(newReply);
     }
 
-    @DeleteMapping("/{replyId}")
-    public ResponseEntity<?> deleteBoard(@PathVariable Long replyId) {
-        replyService.deleteReply(replyId);
-        return ResponseEntity.ok().body("삭제 완료");
-    }
-
 }

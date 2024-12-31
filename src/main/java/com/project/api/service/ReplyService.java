@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.Optional;
 
 @Service
@@ -25,7 +24,6 @@ public class ReplyService {
     private final ReplyRepository replyRepository;
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
-    private final EntityManager em;
 
     public Reply saveReply(ReplySaveDto dto) {
         User foundUser = userRepository.findById(dto.getUserId()).orElseThrow();
@@ -43,20 +41,4 @@ public class ReplyService {
     }
 
 
-    public void deleteReply(Long replyId) {
-        Reply foundReply = replyRepository.findById(replyId)
-                .orElseThrow(() -> new IllegalArgumentException("Reply not found"));
-
-        // 1. 연관 관계 해제
-        foundReply.removeAssociations();
-
-        // 2. 영속성 컨텍스트 동기화
-        em.flush();
-        em.clear();
-
-        // 3. 댓글 삭제
-        replyRepository.delete(foundReply);
-
-        log.info("Reply successfully deleted: {}", replyId);
-    }
 }
