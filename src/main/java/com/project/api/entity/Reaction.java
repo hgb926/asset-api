@@ -57,16 +57,19 @@ public class Reaction {
         REPLY
     }
 
-    @PreRemove
-    public void preRemove() {
+    // 명시적으로 관계 해제
+    public void removeAssociations() {
         if (this.board != null) {
             this.board.getReactions().remove(this);
+            this.board = null;
         }
         if (this.reply != null) {
             this.reply.getReactions().remove(this);
+            this.reply = null;
         }
         if (this.user != null) {
             this.user.getReactions().remove(this);
+            this.user = null;
         }
     }
 }

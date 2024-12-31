@@ -44,13 +44,13 @@ public class Board {
     private LocalDateTime createdAt;
 
     @Builder.Default
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    @OneToMany(mappedBy = "board", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Reply> replies = new ArrayList<>();
 
     @Builder.Default
-    @JsonIgnore
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Reaction> reactions = new ArrayList<>();
 
     private Long viewCount;
@@ -76,6 +76,14 @@ public class Board {
         return reactions.stream().filter(r ->
                 r.getReactionType() == Reaction.ReactionType.DISLIKE)
                 .count();
+    }
+
+    // 연관관계 해제 메서드 추가
+    public void removeAssociations() {
+        this.replies.forEach(reply -> reply.setBoard(null));
+        this.reactions.forEach(reaction -> reaction.setBoard(null));
+        this.replies.clear();
+        this.reactions.clear();
     }
 
 }
