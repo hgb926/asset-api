@@ -48,5 +48,6 @@ public class BoardResponseDto {
         this.dislikeCount = board.getDislikeCount(board.getReactions());
         this.viewCount = board.getViewCount();
         this.createdAt = board.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.isModified = board.isModified();
     }
 }

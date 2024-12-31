@@ -55,6 +55,8 @@ public class Board {
 
     private Long viewCount;
 
+    private boolean isModified;
+
     @PrePersist
     public void prePersist() {
         if (this.viewCount == null) {

@@ -75,9 +75,9 @@ public class BoardService {
         foundBoard.setTitle(dto.getTitle());
         foundBoard.setContent(dto.getContent());
         foundBoard.setCategory(dto.getCategory());
+        foundBoard.setModified(true);
         boardRepository.save(foundBoard);
         BoardResponseDto modifiedBoard = new BoardResponseDto(foundBoard);
-        modifiedBoard.setModified(true);
         return modifiedBoard;
     }
 }

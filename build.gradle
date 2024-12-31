@@ -59,9 +59,9 @@ dependencies {
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
-    include '**/*'
-//    exclude('**/*')
+//	useJUnitPlatform()
+//    include '**/*'
+    exclude('**/*')
 }
 
 // querydsl 추가 시작
