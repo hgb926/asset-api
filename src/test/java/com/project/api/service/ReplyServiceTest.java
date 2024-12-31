@@ -80,7 +80,7 @@ class ReplyServiceTest {
         };
 
         // 40개의 게시글(9~88 ID 범위)에 평균 10개씩 댓글 삽입
-        for (int boardId = 9; boardId <= 88; boardId++) {
+        for (int boardId = 300; boardId <= 409; boardId++) {
             // 각 게시글당 5~15개의 댓글을 무작위로 생성
             int replyCount = random.nextInt(11) + 5; // 5 ~ 15
 

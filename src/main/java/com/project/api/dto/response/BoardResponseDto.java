@@ -26,6 +26,7 @@ public class BoardResponseDto {
     private Long likeCount;
     private Long dislikeCount;
     private Long viewCount;
+    private boolean isModified;
 
     public BoardResponseDto(Board board) {
         this.id = board.getId();

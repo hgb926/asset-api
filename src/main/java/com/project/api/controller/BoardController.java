@@ -2,6 +2,7 @@ package com.project.api.controller;
 
 import com.project.api.auth.TokenProvider;
 import com.project.api.auth.TokenProvider.TokenUserInfo;
+import com.project.api.dto.request.BoardModifyDto;
 import com.project.api.dto.request.BoardSaveDto;
 import com.project.api.dto.response.BoardResponseDto;
 import com.project.api.entity.Board;
@@ -53,5 +54,11 @@ public class BoardController {
     public ResponseEntity<?> getBoardDetail (@PathVariable Long boardId) {
         BoardResponseDto board = boardService.findOne(boardId);
         return ResponseEntity.ok().body(board);
+    }
+
+    @PatchMapping
+    public ResponseEntity<?> modifyBoard (@RequestBody BoardModifyDto dto) {
+        BoardResponseDto boardResponseDto = boardService.modifyBoard(dto);
+        return ResponseEntity.ok().body(boardResponseDto);
     }
 }

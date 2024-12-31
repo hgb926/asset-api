@@ -1,5 +1,6 @@
 package com.project.api.service;
 
+import com.project.api.dto.request.BoardModifyDto;
 import com.project.api.dto.request.BoardSaveDto;
 import com.project.api.dto.response.BoardResponseDto;
 import com.project.api.entity.Board;
@@ -67,5 +68,16 @@ public class BoardService {
         BoardResponseDto dto = new BoardResponseDto(foundBoard);
         log.info("converted board dto : {}", dto);
         return dto;
+    }
+
+    public BoardResponseDto modifyBoard(BoardModifyDto dto) {
+        Board foundBoard = boardRepository.findById(dto.getId()).orElseThrow();
+        foundBoard.setTitle(dto.getTitle());
+        foundBoard.setContent(dto.getContent());
+        foundBoard.setCategory(dto.getCategory());
+        boardRepository.save(foundBoard);
+        BoardResponseDto modifiedBoard = new BoardResponseDto(foundBoard);
+        modifiedBoard.setModified(true);
+        return modifiedBoard;
     }
 }
