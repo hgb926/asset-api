@@ -44,9 +44,11 @@ public class BoardController {
     @GetMapping
     public ResponseEntity<?> getAllBoard(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-
-        Page<BoardResponseDto> boardPage = boardService.getBoards(page, size);
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "desc") String sort,
+            @RequestParam(defaultValue = "createdAt") String order) {
+        log.info("direction in controller : {}", sort);
+        Page<BoardResponseDto> boardPage = boardService.getBoards(page, size, sort, order);
         return ResponseEntity.ok(boardPage);
     }
 

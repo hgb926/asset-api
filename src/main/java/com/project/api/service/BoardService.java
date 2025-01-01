@@ -55,8 +55,17 @@ public class BoardService {
      * @param size 페이지당 항목 수
      * @return Page<BoardResponseDto>
      */
-    public Page<BoardResponseDto> getBoards(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+    public Page<BoardResponseDto> getBoards(int page, int size, String sort, String order) {
+        Sort.Direction direction = null;
+        if (sort.equals("desc")) {
+            direction = Sort.Direction.DESC;
+        } else if (sort.equals("asc")) {
+            direction = Sort.Direction.ASC;
+        }
+        log.info("direction : {}", direction);
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, order));
+        System.out.println("pageable = " + pageable);
         Page<Board> boardPage = boardRepository.findAll(pageable);
 
         return boardPage.map(BoardResponseDto::new);

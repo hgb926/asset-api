@@ -2,11 +2,18 @@ package com.project.api.service;
 
 import com.project.api.dto.request.BoardSaveDto;
 import com.project.api.entity.Board;
+import com.project.api.repository.BoardRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,6 +23,8 @@ class BoardServiceTest {
 
     @Autowired
     private BoardService boardService;
+    @Autowired
+    private BoardRepository boardRepository;
 
     @Test
     @DisplayName("게시글 더미데이터 삽입")
@@ -123,4 +132,15 @@ class BoardServiceTest {
 
         //then
     }
+
+
+    @Test
+    @DisplayName("시간 순대로 가져옴 테스트")
+    void findAllByCreatedAtTest() {
+        //given
+        List<Board> all = boardRepository.findAll();
+        //when
+        //then
+    }
+
 }
