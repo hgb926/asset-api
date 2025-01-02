@@ -69,4 +69,13 @@ public class NoticeService {
         foundNotice.setClicked(true);
         noticeRepository.save(foundNotice);
     }
+
+    public void clickAllEvent(Long id) {
+        User foundUser = userRepository.findById(id).orElse(null);
+        List<Notice> noticeList = foundUser.getNoticeList();
+        for (Notice notice : noticeList) {
+            notice.setClicked(true);
+        }
+        noticeRepository.saveAll(noticeList);
+    }
 }

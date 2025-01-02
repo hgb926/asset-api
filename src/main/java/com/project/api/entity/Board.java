@@ -48,9 +48,18 @@ public class Board {
     @OneToMany(mappedBy = "board", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Reply> replies = new ArrayList<>();
 
+    private Integer replyCount;
+
+    @Builder.Default
+    @JsonIgnore
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reaction> reactions = new ArrayList<>();
+
     private Long viewCount;
 
-    // 좋아요 해야함
+    private boolean isModified;
+    private LocalDateTime modifiedAt;
+
     @PrePersist
     public void prePersist() {
         if (this.viewCount == null) {
@@ -60,6 +69,18 @@ public class Board {
 
     public enum Category {
         QNA, TIP, INFO
+    }
+
+    public Long getLikeCount(List<Reaction> reactions) {
+        return reactions.stream().filter(r ->
+            r.getReactionType() == Reaction.ReactionType.LIKE)
+                .count();
+    }
+
+    public Long getDislikeCount(List<Reaction> reactions) {
+        return reactions.stream().filter(r ->
+                r.getReactionType() == Reaction.ReactionType.DISLIKE)
+                .count();
     }
 
 }
