@@ -49,24 +49,38 @@ public class BoardService {
         }
     }
 
+
     /**
-     * 페이징된 게시글 목록 반환
-     * @param page 페이지 번호 (0부터 시작)
-     * @param size 페이지당 항목 수
+     * 게시글 목록 조회 (페이징, 정렬, 검색)
+     *
+     * @param page      페이지 번호 (0부터 시작)
+     * @param size      페이지당 항목 수
+     * @param sort      정렬 방향 (asc, desc)
+     * @param order     정렬 기준 (createdAt, title 등)
+     * @param category  카테고리 필터 (선택사항)
+     * @param keyword   검색 키워드 (선택사항)
+     * @param searchType 검색 유형 (title, titleAndContent, author)
      * @return Page<BoardResponseDto>
      */
-    public Page<BoardResponseDto> getBoards(int page, int size, String sort, String order) {
-        Sort.Direction direction = null;
-        if (sort.equals("desc")) {
-            direction = Sort.Direction.DESC;
-        } else if (sort.equals("asc")) {
-            direction = Sort.Direction.ASC;
-        }
-        log.info("direction : {}", direction);
+    public Page<BoardResponseDto> getBoards(int page, int size, String sort, String order,
+                                            String category, String keyword, String searchType) {
+        // 정렬 방향 검증
+        Sort.Direction direction = "asc".equalsIgnoreCase(sort) ? Sort.Direction.ASC : Sort.Direction.DESC;
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, order));
-        System.out.println("pageable = " + pageable);
-        Page<Board> boardPage = boardRepository.findAll(pageable);
+        // 정렬 기준 검증
+        String sortBy = (order != null && !order.isEmpty()) ? order : "createdAt";
+
+        log.info("Sorting by: {} in {} order", sortBy, direction);
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+
+        // Repository 호출 (검색 및 페이징)
+        Page<Board> boardPage = boardRepository.getSearchResult(pageable, category, keyword, searchType);
+
+        if (boardPage.isEmpty()) {
+            log.warn("No boards found for the given criteria - Page: {}, Size: {}", page, size);
+            return Page.empty();
+        }
 
         return boardPage.map(BoardResponseDto::new);
     }

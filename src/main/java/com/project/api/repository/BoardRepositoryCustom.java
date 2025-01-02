@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface BoardRepositoryCustom {
 
-    Page<Board> getSearchResult(Pageable pageable, String category, String keyword);
+    Page<Board> getSearchResult(Pageable pageable, String category, String keyword, String searchType);
 }

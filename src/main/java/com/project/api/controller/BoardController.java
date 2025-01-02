@@ -35,20 +35,26 @@ public class BoardController {
         return ResponseEntity.badRequest().body("내용이 비어있습니다.");
     }
 
-    /**
-     * 게시판 목록 (페이징)
-     * @param page 페이지 번호 (0부터 시작)
-     * @param size 페이지당 항목 수
-     * @return Page<BoardResponseDto>
-     */
+
     @GetMapping
     public ResponseEntity<?> getAllBoard(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "desc") String sort,
-            @RequestParam(defaultValue = "createdAt") String order) {
-        log.info("direction in controller : {}", sort);
-        Page<BoardResponseDto> boardPage = boardService.getBoards(page, size, sort, order);
+            @RequestParam(defaultValue = "createdAt") String order,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(defaultValue = "title") String searchType) {
+
+        log.info("Fetching boards - page: {}, size: {}, sort: {}, order: {}, category: {}, keyword: {}, searchType: {}",
+                page, size, sort, order, category, keyword, searchType);
+
+        Page<BoardResponseDto> boardPage = boardService.getBoards(page, size, sort, order, category, keyword, searchType);
+
+        if (boardPage.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
         return ResponseEntity.ok(boardPage);
     }
 

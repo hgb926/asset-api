@@ -48,8 +48,6 @@ public class Board {
     @OneToMany(mappedBy = "board", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Reply> replies = new ArrayList<>();
 
-    // 이제 정렬 드가자~
-
     private Integer replyCount;
 
     @Builder.Default

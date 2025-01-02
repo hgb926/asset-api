@@ -48,4 +48,11 @@ public class NoticeController {
         return ResponseEntity.ok().body("success");
     }
 
+    @PostMapping("/all/{id}")
+    public ResponseEntity<?> clickAllEvent(@PathVariable Long id) {
+        log.info("notice id = {} ", id);
+        noticeService.clickAllEvent(id);
+        return ResponseEntity.ok().body("success");
+    }
+
 }
